@@ -34,7 +34,7 @@ ui <- page_navbar(
     
     # Middle section: Phenology Timelines
     card(
-      card_header("Expected Phenology"),
+      card_header("Flowering/Fruiting timings"),
       plotlyOutput("phenology_plot", height = "300px"),
       hr(),
       uiOutput("phenology_refs")
@@ -70,4 +70,11 @@ ui <- page_navbar(
 )
 
 # Wrap UI in secure_app for authentication
-secure_app(ui)
+secure_app(
+  ui, 
+  head_auth = tags$style("
+    body, .panel-title, .form-control, .btn {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
+    }
+  ")
+)

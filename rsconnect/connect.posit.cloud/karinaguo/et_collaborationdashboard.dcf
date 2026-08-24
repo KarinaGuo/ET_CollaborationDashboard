@@ -1,0 +1,12 @@
+name: et_collaborationdashboard
+title: ET_CollaborationDashboard
+username: karinaguo
+account: karinaguo
+server: connect.posit.cloud
+hostUrl: https://api.connect.posit.cloud/v1
+appId: 01a035ce-6732-c6eb-93fe-8d8ff1c1ee70
+bundleId:
+url: https://connect.posit.cloud/karinaguo/content/01a035ce-6732-c6eb-93fe-8d8ff1c1ee70
+version: 1
+asMultiple: FALSE
+asStatic: FALSE
