@@ -1,0 +1,29 @@
+Tab 1: All species table
+	• Five different species with different progress statuses/at different stages
+		○ The stages are: Seed collection, Seedling growth, Seedling testing, Genetic studies, Deployment and monitoring, Results, Notes
+		○ The species are visible to all users. But a species is only clickable if the user has permission to view that species. By pressing this, you are taken to the Subset Tabs (a new row of tabs show up under this main menu)
+		
+	• Each stage is further broken down
+		○ If a species has the stage as "In progress" or "Completed", then these tabs are available. Otherwise they are greyed out, and when hovered a pop up of "Not yet conducted" is shown.
+		○ Subset Tab 1: Seed collection - a map of the collection location. A map of all the ALA occurrence data and dots of where collections have already occurred. A plot under the map of the known flowering and seeding months of the species
+            * The ALA occurrence data will be automatically grabbed and stored when a new species is made. This will be cleaned using CoordinateCleaner to remove anomalous records
+            * Australian flowering and seeding times will be grabbed from the web with references appended to the plot
+		○ Subset Tab 2: Seedling growth & testing - 
+			§ Seedling growth: A figure with the x axis of the date, and if valid, a point along the x axis on the sown date. If highlighted this will tell you how many seed lots were sown. There is also a dashed line on the figure to illustrate the expected germination time. 
+			§ Seedling testing: 
+				□ If in progress, a text that states "Currently testing xxx number of seedlings from xxx seed lots. Testing began on xxx date".  Include a spot for the last photographed status: A photograph and an inputted date
+				□ If this stage is completed, a text that states "Tested xxx number of seedlings from xxx seed lots. Testing finished don xxx date"
+                Include a downloadable csv of results - this table can be filtered
+                Include a histogram of the results, with the x axis as the COI and the y axis as the "frequency" - dataset: "Data/3a_Scoring_results_COI.csv"
+		○ Subset Tab 3: Genetic studies: 
+			§ If in progress: "Currently in progress"
+			§ If completed include sections: 
+				□ Population genetics: Leave space here for three plots, a PCA plot, a LEA plot and an FsT plot
+		○ Subset Tab 4: Deployment and monitoring: 
+			§ Text that includes, "Planting occurred at xxx sites with xxx seedlings". Below this there is a list of sites. Each site is clickable and will move you down this tab to the relevant section.
+			§ Under this text, an overall monitoring result will be present. This will take the form of a patchwork of figure and texts. And a downloadable link to the csv
+			§ Under this overall monitoring result will be a heading for each site, with the same plots but for each site. 
+	
+	• Password protected
+		○ Each user has a unique login. This allows them to see a subset of species and sites. This is controlled from a master database. This means that each figure and data table will be updated accordingly within each site
+	
