@@ -304,7 +304,10 @@ server <- function(input, output, session) {
     seed_data <- seed_collections_data() %>% filter(Species == sp)
     
     # Build map and set initial zoom to bounding box
-    m <- leaflet() %>% addProviderTiles(providers$CartoDB.Positron)
+    m <- leaflet() %>% addProviderTiles(
+      providers$CartoDB.Positron, 
+      options = providerTileOptions(apikey = "cb1_2exg_1_541f20def5e9c0044e3c97e3")
+    )
     
     lngs <- numeric(0)
     lats <- numeric(0)
