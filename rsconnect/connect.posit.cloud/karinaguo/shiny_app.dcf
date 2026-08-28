@@ -1,0 +1,12 @@
+name: shiny_app
+title: Shiny app
+username: karinaguo
+account: karinaguo
+server: connect.posit.cloud
+hostUrl: https://api.connect.posit.cloud/v1
+appId: 01a0468b-92e5-b11f-95d8-3f0c6ddb211c
+bundleId:
+url: https://connect.posit.cloud/karinaguo/content/01a0468b-92e5-b11f-95d8-3f0c6ddb211c
+version: 1
+asMultiple: FALSE
+asStatic: FALSE

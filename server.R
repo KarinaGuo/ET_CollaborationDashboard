@@ -52,6 +52,24 @@ server <- function(input, output, session) {
     stringsAsFactors = FALSE
   )
   
+  # Reactive file reader for Overall scores (maternal)
+  overall_scores_maternal_data <- reactiveFileReader(
+    intervalMillis = 2000,
+    session = session,
+    filePath = file.path(data_dir, "5_Overall_scores_maternal.csv"),
+    readFunc = read.csv,
+    stringsAsFactors = FALSE
+  )
+  
+  # Reactive file reader for Overall scores (seedling)
+  overall_scores_seedling_data <- reactiveFileReader(
+    intervalMillis = 2000,
+    session = session,
+    filePath = file.path(data_dir, "5_Overall_scores_seedling.csv"),
+    readFunc = read.csv,
+    stringsAsFactors = FALSE
+  )
+  
   # Read phenology data once per user session (app load)
   phenology_data <- {
     data <- read.csv(file.path(data_dir, "Phenology_data.csv"), stringsAsFactors = FALSE)
@@ -242,6 +260,23 @@ server <- function(input, output, session) {
         if(is_disabled("Monitoring")) h5("Not yet conducted") else tagList(
           downloadButton("download_monitoring", "Download CSV", class = "btn-sm mb-2", style = "padding: 2px 8px;"),
           reactableOutput("monitoring_table")
+        )
+      ),
+      
+      tabPanel(
+        title = "5. Overall Scores",
+        value = "tab_overall",
+        br(),
+        if(is_disabled("Scoring")) h5("Not yet conducted") else tagList(
+          radioButtons(
+            "overall_score_type", 
+            "Select Level:", 
+            choices = c("Maternal Line" = "maternal", "Seedling" = "seedling"), 
+            selected = "maternal",
+            inline = TRUE
+          ),
+          downloadButton("download_overall", "Download CSV", class = "btn-sm mb-2", style = "padding: 2px 8px;"),
+          reactableOutput("overall_table")
         )
       )
     )
@@ -482,6 +517,46 @@ server <- function(input, output, session) {
         df <- monitoring_results_data()[0, ]
         if (names(df)[1] == "X" || names(df)[1] == "") df <- df[, -1, drop = FALSE]
       }
+      write.csv(df, file, row.names = FALSE)
+    }
+  )
+  
+  # Overall Scores Table
+  output$overall_table <- renderReactable({
+    sp <- selected_species()
+    req(sp)
+    
+    if (input$overall_score_type == "maternal") {
+      df <- overall_scores_maternal_data() %>% filter(Species == sp)
+    } else {
+      df <- overall_scores_seedling_data() %>% filter(Species == sp)
+    }
+    
+    if (names(df)[1] == "X" || names(df)[1] == "") {
+      df <- df[, -1, drop = FALSE]
+    }
+    
+    reactable(
+      df,
+      highlight = TRUE,
+      compact = TRUE,
+      pagination = TRUE,
+      filterable = TRUE
+    )
+  })
+  
+  # Download Handler for Overall Scores
+  output$download_overall <- downloadHandler(
+    filename = function() { 
+      paste0(gsub(" ", "_", selected_species()), "_Overall_Scores_", input$overall_score_type, ".csv") 
+    },
+    content = function(file) {
+      if (input$overall_score_type == "maternal") {
+        df <- overall_scores_maternal_data() %>% filter(Species == selected_species())
+      } else {
+        df <- overall_scores_seedling_data() %>% filter(Species == selected_species())
+      }
+      if (names(df)[1] == "X" || names(df)[1] == "") df <- df[, -1, drop = FALSE]
       write.csv(df, file, row.names = FALSE)
     }
   )
